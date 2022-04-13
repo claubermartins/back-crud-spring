@@ -28,5 +28,8 @@ public class Course {
 
 	@Column(length = 20, nullable = false)
 	private String category;
+	
+	@Column(length = 200, nullable = false)
+	private String email;
 
 }

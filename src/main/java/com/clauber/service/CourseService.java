@@ -13,15 +13,14 @@ import com.clauber.exceptions.ResourceNotFoundException;
 import com.clauber.model.Course;
 import com.clauber.repository.CourseRepository;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Service
 public class CourseService {
 
 	@Autowired
 	private CourseRepository courseRepository;
-
-	public CourseService(CourseRepository courseRepository) {
-		this.courseRepository = courseRepository;
-	}
 
 	public Page<Course> obterTodos(Pageable pageable) {
 		return courseRepository.findAll(pageable);
@@ -34,6 +33,10 @@ public class CourseService {
 	public Optional<Course> buscarPorId(Long id) {
 		return courseRepository.findById(id);
 	}
+	
+    public Optional<Course> buscaPorCpf(String email){
+        return courseRepository.findByEmail(email);
+    }
 
 	public Optional<Course> buscaPorName(String name) {
 		return courseRepository.findByNameIgnoreCase(name);
@@ -45,12 +48,28 @@ public class CourseService {
 
 	// CRUD
 	public Course salvar(Course course) {
-		var podeSalvar = course.getId() == null
-				&& courseRepository.findByNameContainingIgnoreCase(course.getName()).isEmpty();
+		var podeSalvar = course.getId() == null && courseRepository.findByEmail(course.getEmail()).isEmpty();
 		if (podeSalvar)
 			return courseRepository.save(course);
 		else
 			throw new DuplicatedResourceException();
 
+	}
+
+	public Course update(Course course) {
+		var podeAtualizar = course.getId() != null
+				&& courseRepository.findByEmail(course.getEmail()).isPresent();
+		if (podeAtualizar)
+			return courseRepository.save(course);
+		else
+			throw new ResourceNotFoundException();
+	}
+
+	public void delete(Course course) {
+		var podeDeletar = course.getId() != null && courseRepository.findByNameIgnoreCase(course.getName()).isPresent();
+		if (podeDeletar)
+			courseRepository.delete(course);
+		else
+			throw new ResourceNotFoundException();
 	}
 }
