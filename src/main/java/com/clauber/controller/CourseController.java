@@ -3,6 +3,8 @@ package com.clauber.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,14 +45,14 @@ public class CourseController {
     }
     
     @PostMapping
-    ResponseEntity<Course> salvar(@RequestBody Course course){
+    ResponseEntity<Course> salvar(@Valid @RequestBody Course course){
         var courseSalva = courseService.salvar(course);
         var uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(course.getId()).toUri();
         return ResponseEntity.created(uri).body(course);
     }
            
     @PutMapping("/{id}")
-    ResponseEntity<Course>update(@RequestBody Course course){
+    ResponseEntity<Course>update(@Valid @RequestBody  Course course){
         var courseUpdated = courseService.update(course);
         return ResponseEntity.ok(courseUpdated);
     }
