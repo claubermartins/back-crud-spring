@@ -82,6 +82,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>taxaSelic</finalName>
 	</build>
 
 </project>
