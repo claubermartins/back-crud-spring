@@ -20,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.clauber.model.Course;
 import com.clauber.service.CourseService;
 
+import io.swagger.annotations.ApiOperation;
+
 
 @RestController
 @RequestMapping("/api/courses")
@@ -32,31 +34,36 @@ public class CourseController {
         this.courseService = courseService;
     }
     
+    @ApiOperation(value = "Lista de cursos")
 	@GetMapping
 	ResponseEntity<List<Course>> obterTodos(){
 		var courses = courseService.obterTodos();
 		return ResponseEntity.ok(courses);
 	}
 	
+    @ApiOperation(value = "Busca de curso por id")
     @GetMapping("/{id}")
     ResponseEntity<Optional<Course>> obterPorId(@PathVariable Long id) {
     	var courses = courseService.buscarPorId(id);
         return ResponseEntity.ok(courses);
     }
     
+    @ApiOperation(value = "Inserindo um curso novo")
     @PostMapping
     ResponseEntity<Course> salvar(@Valid @RequestBody Course course){
         var courseSalva = courseService.salvar(course);
         var uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(course.getId()).toUri();
         return ResponseEntity.created(uri).body(course);
     }
-           
+         
+    @ApiOperation(value = "Atualizando as informações de um determinado curso")
     @PutMapping("/{id}")
     ResponseEntity<Course>update(@Valid @RequestBody  Course course){
         var courseUpdated = courseService.update(course);
         return ResponseEntity.ok(courseUpdated);
     }
     
+    @ApiOperation(value = "Deletando um curso")
     @DeleteMapping
     ResponseEntity<Course> delete(@RequestBody Course course){
         courseService.delete(course);
