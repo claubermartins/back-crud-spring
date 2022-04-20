@@ -94,7 +94,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>taxaSelic</finalName>
+		<finalName>backCrudSpring</finalName>
 	</build>
 
 </project>
