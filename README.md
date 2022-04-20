@@ -24,4 +24,4 @@ posteriormente ela será consumida por uma aplicação front-end com Angular.
 * Utilize o Postman criando um request para testar o funcionamento da api utilizando os métodos HTTP: GET, POST, PUT e DELETE.
 
 ## Maiores Informações
-* <p align="left"><a href="">Link do repositório com a imagem Docker</a></p>
+* <p align="left"><a href="https://hub.docker.com/r/claubermartins/back-crud-spring">Link do repositório com a imagem Docker</a></p>
