@@ -53,7 +53,7 @@ public class CourseController {
     ResponseEntity<Course> salvar(@Valid @RequestBody Course course){
         var courseSalva = courseService.salvar(course);
         var uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(course.getId()).toUri();
-        return ResponseEntity.created(uri).body(course);
+        return ResponseEntity.created(uri).body(courseSalva);
     }
          
     @ApiOperation(value = "Atualizando as informações de um determinado curso")

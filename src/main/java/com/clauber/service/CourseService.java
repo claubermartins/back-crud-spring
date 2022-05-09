@@ -66,7 +66,8 @@ public class CourseService {
 	}
 
 	public void delete(Course course) {
-		var podeDeletar = course.getId() != null && courseRepository.findByNameIgnoreCase(course.getName()).isPresent();
+		var podeDeletar = course.getId() != null 
+				&& courseRepository.findByEmail(course.getEmail()).isPresent();
 		if (podeDeletar)
 			courseRepository.delete(course);
 		else
